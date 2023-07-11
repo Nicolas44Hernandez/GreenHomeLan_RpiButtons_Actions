@@ -4,14 +4,12 @@ GPIO interface service
 import logging
 from typing import Iterable
 import RPi.GPIO as GPIO
-import Keypad
-
+import adafruit_matrixkeypad as Keypad
 logger = logging.getLogger(__name__)
 
 ROWS=2
 COLS=2
-keys = ["1","2","3", "4"]
-
+keys = ((1, 2),(3, 4))
 rowsPins=[21,20]
 colsPins=[16,12]
 
@@ -21,7 +19,7 @@ class GpioButtonMatrixInterface:
 
     rowsPins: Iterable[int]
     colsPins: Iterable[int]
-    keypad: Keypad.Keypad
+    keypad: Keypad.Matrix_Keypad
 
     def __init__(self, rowsPins: Iterable[int], colsPins: Iterable[int]):
 
@@ -32,17 +30,16 @@ class GpioButtonMatrixInterface:
         self.colsPins = colsPins
 
         # button matrix setup
-        self.keypad = Keypad.Keypad(keys, rowsPins, colsPins, ROWS, COLS)
-        self.keypad.setDebounceTime(50)
+        self.keypad = Keypad.Matrix_Keypad(rowsPins, colsPins, keys)
 
 
     def check_button_pressed(self):
         """Return the key of the button pressed, if not button"""
         logger.info("Checking if button is pressed")
-        key = self.keypad.getKey()
-        if key != self.keypad.NULL:
-            logger.info(f"Button pressed: {key}")
-            return key
+        keys = self.keypad.pressed_keys
+        if keys:
+            logger.info(f"Buttons pressed: {keys}")
+            return keys
         return None
 
 
