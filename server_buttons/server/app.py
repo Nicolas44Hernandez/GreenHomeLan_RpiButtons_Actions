@@ -9,7 +9,7 @@ from .managers.thread_manager import thread_manager_service
 from .managers.mqtt_manager import mqtt_manager_service
 from .managers.buttons_matrix_manager import buttons_matrix_manager_service
 from .managers.wifi_connection_manager import wifi_connection_manager_service
-from .notification import notification_service
+#from .notification import notification_service
 
 logger = logging.getLogger(__name__)
 
