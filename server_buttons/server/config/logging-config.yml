@@ -52,40 +52,40 @@ root:
 loggers:
   server.app:
     level: INFO
-    handlers: [app]
+    handlers: [console]
     propagate: no
 
   server.managers.mqtt_manager:
     level: INFO
-    handlers: [mqtt]
+    handlers: [console]
     propagate: no
 
   server.managers.thread_manager:
     level: INFO
-    handlers: [thread]
+    handlers: [console]
     propagate: no
 
   server.managers.buttons_matrix_manager:
     level: INFO
-    handlers: [buttons]
+    handlers: [console]
     propagate: no
 
   server.managers.wifi_connection_manager:
     level: INFO
-    handlers: [wifi_connection]
+    handlers: [console]
     propagate: no
 
   server.interfaces.mqtt_interface:
     level: INFO
-    handlers: [mqtt]
+    handlers: [console]
     propagate: no
 
   server.interfaces.thread_interface:
     level: INFO
-    handlers: [thread]
+    handlers: [console]
     propagate: no
 
   server.interfaces.gpio_interface:
     level: INFO
-    handlers: [buttons]
+    handlers: [console]
     propagate: no
