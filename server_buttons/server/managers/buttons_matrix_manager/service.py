@@ -40,10 +40,10 @@ class ButtonsMatrixManager:
         # Buttons status polling job
         @buttons_status_timeloop.job(interval=timedelta(milliseconds=50))
         def check_buttons_pressed():
-            logger.info(f"Launch buttons status polling")
-            # pressed = self.gpio_interface.check_button_pressed()
-            # if pressed is not None:
-            #     logger.info(f"Button pressed {pressed}")
+            #logger.info(f"Launch buttons status polling")
+            pressed = self.gpio_interface.check_button_pressed()
+            if pressed is not None:
+                logger.info(f"Button pressed {pressed}")
 
         buttons_status_timeloop.start(block=False)
 
