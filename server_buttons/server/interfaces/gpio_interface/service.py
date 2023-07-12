@@ -3,7 +3,7 @@ GPIO interface service
 """
 import logging
 import time
-from gpiozero import DigitalOutputDevice, InputDevice
+from gpiozero import DigitalOutputDevice, DigitalInputDevice
 
 logger = logging.getLogger(__name__)
 
@@ -14,8 +14,8 @@ class GpioButtonMatrixInterface:
 
     row_1: DigitalOutputDevice
     row_2: DigitalOutputDevice
-    col_1: InputDevice
-    col_2: InputDevice
+    col_1: DigitalInputDevice
+    col_2: DigitalInputDevice
     def __init__(self, row_1_pin: int, row_2_pin: int, col_1_pin: int, col_2_pin: int):
 
         logger.info(f"Creating RPI GPIO Button Matrix interface:")
@@ -23,8 +23,8 @@ class GpioButtonMatrixInterface:
 
         self.row_1 = DigitalOutputDevice(pin=row_1_pin, active_high=True)
         self.row_2 = DigitalOutputDevice(pin=row_2_pin,active_high=True)
-        self.col_1 = InputDevice(pin=col_1_pin)
-        self.col_2 = InputDevice(pin=col_2_pin)
+        self.col_1 = DigitalInputDevice(pin=col_1_pin, active_state=True)
+        self.col_2 = DigitalInputDevice(pin=col_2_pin, active_state=True)
 
     def check_button_pressed(self):
         """Return the key of the button pressed, if not button"""
