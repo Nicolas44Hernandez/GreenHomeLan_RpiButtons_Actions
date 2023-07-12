@@ -23,8 +23,8 @@ class GpioButtonMatrixInterface:
 
         self.row_1 = DigitalOutputDevice(pin=row_1_pin, active_high=True)
         self.row_2 = DigitalOutputDevice(pin=row_2_pin,active_high=True)
-        self.col_1 = InputDevice(pin=col_1_pin, active_state=True)
-        self.col_2 = InputDevice(pin=col_2_pin, active_state=True)
+        self.col_1 = InputDevice(pin=col_1_pin)
+        self.col_2 = InputDevice(pin=col_2_pin)
 
     def check_button_pressed(self):
         """Return the key of the button pressed, if not button"""
