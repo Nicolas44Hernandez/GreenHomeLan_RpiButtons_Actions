@@ -3,7 +3,7 @@ from datetime import timedelta
 from timeloop import Timeloop
 from flask import Flask
 from server.interfaces.gpio_interface import GpioButtonMatrixInterface
-#from server.notification import notification_service
+from server.commands_sender import commands_sender_service
 
 logger = logging.getLogger(__name__)
 
@@ -53,8 +53,9 @@ class ButtonsMatrixManager:
     def button_press_callback(self, key: int):
         """Callback function for button press"""
         logger.info(f"Button pressed {key}")
-        # Notify the alarm to orchestrator
-        #notification_service.notify_alarm(alarm_type="emergency_btn", msg="button pressed")
+        # Send the command to orchestrator
+        cmd = f"cmd_{key}"
+        commands_sender_service.send_command_to_orchestrator(command=cmd)
 
 buttons_matrix_manager_service: ButtonsMatrixManager = ButtonsMatrixManager()
 """ Buttons matrix manager service singleton"""
