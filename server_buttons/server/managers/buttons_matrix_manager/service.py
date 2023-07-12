@@ -43,15 +43,14 @@ class ButtonsMatrixManager:
             #logger.info(f"Launch buttons status polling")
             pressed = self.gpio_interface.check_button_pressed()
             if pressed is not None:
-                logger.info(f"Button pressed {pressed}")
+                self.button_press_callback(pressed)
 
         buttons_status_timeloop.start(block=False)
 
 
-    def button_press_callback(self, key):
+    def button_press_callback(self, key: int):
         """Callback function for button press"""
-        logger.info(f"Button {key} pressed")
-
+        logger.info(f"Button pressed {key}")
         # Notify the alarm to orchestrator
         #notification_service.notify_alarm(alarm_type="emergency_btn", msg="button pressed")
 

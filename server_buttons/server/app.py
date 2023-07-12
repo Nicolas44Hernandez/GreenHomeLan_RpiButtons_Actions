@@ -47,13 +47,13 @@ def register_extensions(app: Flask):
     """Initialize all extensions"""
 
     # MQTT service
-    # mqtt_manager_service.init_app(app=app)
+    mqtt_manager_service.init_app(app=app)
     # Thread manager extension
     # thread_manager_service.init_app(app=app)
     # Button manager extension
     buttons_matrix_manager_service.init_app(app=app)
     # Wifi connection manager extention
-    # wifi_connection_manager_service.init_app(app=app)
+    wifi_connection_manager_service.init_app(app=app)
     # Notification extension
     #notification_service.init_app(app=app)
 
