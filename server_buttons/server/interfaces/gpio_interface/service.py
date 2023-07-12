@@ -36,9 +36,9 @@ class GpioButtonMatrixInterface:
         time.sleep(5/1000)
 
         # Check output values
-        if self.col_1.value():
+        if self.col_1.value:
             return KEYS[0]
-        if self.col_2.value():
+        if self.col_2.value:
             return KEYS[1]
 
         # Set row_1 to low and row_2 to high
@@ -47,9 +47,9 @@ class GpioButtonMatrixInterface:
         time.sleep(5/1000)
 
         # Check output values
-        if self.col_1.value():
+        if self.col_1.value:
             return KEYS[2]
-        if self.col_2.value():
+        if self.col_2.value:
             return KEYS[3]
 
         # Return None any button pressed
