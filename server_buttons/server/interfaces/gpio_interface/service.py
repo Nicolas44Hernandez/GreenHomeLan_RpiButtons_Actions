@@ -7,7 +7,7 @@ from gpiozero import DigitalOutputDevice, DigitalInputDevice
 
 logger = logging.getLogger(__name__)
 
-KEYS = [1, 2, 3, 4]
+KEYS = [1, 3, 2, 4]
 
 class GpioButtonMatrixInterface:
     """Service class for RPI Button Matrix GPIO"""
