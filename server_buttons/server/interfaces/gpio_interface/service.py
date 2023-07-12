@@ -37,6 +37,9 @@ class GpioButtonMatrixInterface:
         # button matrix setup
         self.keypad = Keypad.Matrix_Keypad(rowsPins, colsPins, keys)
 
+        # Set polling functions
+        self.schedule_buttons_status_polling()
+
 
     def schedule_buttons_status_polling(self):
         """Schedule the buttons status polling"""
