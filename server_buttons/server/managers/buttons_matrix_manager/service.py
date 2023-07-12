@@ -31,6 +31,9 @@ class ButtonsMatrixManager:
                 col_2_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_C2"],
             )
 
+            # Set polling task
+            self.schedule_buttons_status_polling()
+
     def schedule_buttons_status_polling(self):
         """Schedule the buttons status polling"""
 
