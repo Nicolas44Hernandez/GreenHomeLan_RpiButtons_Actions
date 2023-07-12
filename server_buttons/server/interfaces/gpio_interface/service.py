@@ -42,7 +42,7 @@ class GpioButtonMatrixInterface:
 
         # Set row_1 to low and row_2 to high
         self.row_1.off()
-        self.row_2.off()
+        self.row_2.on()
         time.sleep(5/1000)
 
         # Check output values
