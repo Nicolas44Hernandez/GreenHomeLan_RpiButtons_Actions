@@ -48,7 +48,7 @@ class GpioButtonMatrixInterface:
         @buttons_status_timeloop.job(interval=timedelta(milliseconds=50))
         def check_buttons_pressed():
             logger.info(f"Launch buttons status polling")
-            # keys = self.keypad.pressed_keys
+            keys = self.keypad.pressed_keys
             # if keys:
             #     logger.info(f"Buttons pressed: {keys}")
 
