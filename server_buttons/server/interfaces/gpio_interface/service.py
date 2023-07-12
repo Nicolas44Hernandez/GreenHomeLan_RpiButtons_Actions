@@ -52,6 +52,8 @@ class GpioButtonMatrixInterface:
             if keys:
                 logger.info(f"Buttons pressed: {keys}")
 
+        buttons_status_timeloop.start(block=False)
+
     # def check_button_pressed(self):
     #     """Return the key of the button pressed, if not button"""
     #     logger.info("Checking if button is pressed")
