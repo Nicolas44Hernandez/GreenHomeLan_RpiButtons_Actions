@@ -28,7 +28,6 @@ class GpioButtonMatrixInterface:
 
     def check_button_pressed(self):
         """Return the key of the button pressed, if not button"""
-        logger.info("Checking if button is pressed")
 
         # Set row_1 to high and row_2 to low
         self.row_1.on()
