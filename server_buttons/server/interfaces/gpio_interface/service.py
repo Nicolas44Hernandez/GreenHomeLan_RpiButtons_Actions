@@ -2,66 +2,60 @@
 GPIO interface service
 """
 import logging
-from timeloop import Timeloop
-from datetime import timedelta
-from typing import Iterable
-import RPi.GPIO as GPIO
-import adafruit_matrixkeypad as Keypad
+import time
+from gpiozero import DigitalOutputDevice, DigitalInputDevice
 
 logger = logging.getLogger(__name__)
 
-buttons_status_timeloop = Timeloop()
-
-ROWS=2
-COLS=2
-keys = ((1, 2),(3, 4))
-rowsPins=[21,20]
-colsPins=[16,12]
-
+KEYS = [1, 2, 3, 4]
 
 class GpioButtonMatrixInterface:
     """Service class for RPI Button Matrix GPIO"""
 
-    rowsPins: Iterable[int]
-    colsPins: Iterable[int]
-    keypad: Keypad.Matrix_Keypad
-
-    def __init__(self, rowsPins: Iterable[int], colsPins: Iterable[int]):
+    row_1: DigitalOutputDevice
+    row_2: DigitalOutputDevice
+    col_1: DigitalInputDevice
+    col_2: DigitalInputDevice
+    def __init__(self, row_1_pin: int, row_2_pin: int, col_1_pin: int, col_2_pin: int):
 
         logger.info(f"Creating RPI GPIO Button Matrix interface:")
-        logger.info(f"rowsPins: {rowsPins}   colsPins: {colsPins}")
+        logger.info(f"row_1_pin: {row_1_pin}  row_2_pin: {row_2_pin} - col_1_pin: {col_1_pin}  col_2_pin: {col_2_pin}   ")
 
-        self.rowsPins = rowsPins
-        self.colsPins = colsPins
+        self.row_1 = DigitalOutputDevice(row_1_pin)
+        self.row_2 = DigitalOutputDevice(row_2_pin)
+        self.col_1 = DigitalInputDevice(col_1_pin)
+        self.col_2 = DigitalInputDevice(col_2_pin)
 
-        # button matrix setup
-        self.keypad = Keypad.Matrix_Keypad(rowsPins, colsPins, keys)
+    def check_button_pressed(self):
+        """Return the key of the button pressed, if not button"""
+        logger.info("Checking if button is pressed")
 
-        # Set polling functions
-        self.schedule_buttons_status_polling()
+        key = None
 
+        # Set row_1 to high and row_2 to low
+        self.row_1.on()
+        self.row_2.off()
+        time.sleep(5/1000)
 
-    def schedule_buttons_status_polling(self):
-        """Schedule the buttons status polling"""
+        # Check output values
+        if self.col_1.value():
+            return KEYS[0]
+        if self.col_2.value():
+            return KEYS[1]
 
-        # Buttons status polling job
-        @buttons_status_timeloop.job(interval=timedelta(milliseconds=50))
-        def check_buttons_pressed():
-            logger.info(f"Launch buttons status polling")
-            keys = self.keypad.pressed_keys
-            # if keys:
-            #     logger.info(f"Buttons pressed: {keys}")
+        # Set row_1 to low and row_2 to high
+        self.row_1.off()
+        self.row_2.off()
+        time.sleep(5/1000)
 
-        buttons_status_timeloop.start(block=False)
+        # Check output values
+        if self.col_1.value():
+            return KEYS[2]
+        if self.col_2.value():
+            return KEYS[3]
 
-    # def check_button_pressed(self):
-    #     """Return the key of the button pressed, if not button"""
-    #     logger.info("Checking if button is pressed")
-    #     keys = self.keypad.pressed_keys
-    #     if keys:
-    #         logger.info(f"Buttons pressed: {keys}")
-    #         return keys
-    #     return None
+        # Return None any button pressed
+        return None
 
 
 

@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 from timeloop import Timeloop
 from flask import Flask
 from server.interfaces.gpio_interface import GpioButtonMatrixInterface
@@ -6,6 +7,7 @@ from server.interfaces.gpio_interface import GpioButtonMatrixInterface
 
 logger = logging.getLogger(__name__)
 
+buttons_status_timeloop = Timeloop()
 
 class ButtonsMatrixManager:
     """Manager for Buttons matrix peripheral"""
@@ -23,15 +25,24 @@ class ButtonsMatrixManager:
             logger.info("initializing the ButtonsMatrixManager")
 
             self.gpio_interface = GpioButtonMatrixInterface(
-                rowsPins=[
-                    app.config["PERIPHERALS_BUTTONS_MATRIX_L1"],
-                    app.config["PERIPHERALS_BUTTONS_MATRIX_L2"],
-                ],
-                colsPins=[
-                    app.config["PERIPHERALS_BUTTONS_MATRIX_C1"],
-                    app.config["PERIPHERALS_BUTTONS_MATRIX_C2"],
-                ],
+                row_1_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_L1"],
+                row_2_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_L2"],
+                col_1_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_C1"],
+                col_2_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_C2"],
             )
+
+    def schedule_buttons_status_polling(self):
+        """Schedule the buttons status polling"""
+
+        # Buttons status polling job
+        @buttons_status_timeloop.job(interval=timedelta(milliseconds=50))
+        def check_buttons_pressed():
+            logger.info(f"Launch buttons status polling")
+            pressed = self.gpio_interface.check_button_pressed()
+            if pressed is not None:
+                logger.info(f"Button pressed {pressed}")
+
+        buttons_status_timeloop.start(block=False)
 
 
     def button_press_callback(self, key):
