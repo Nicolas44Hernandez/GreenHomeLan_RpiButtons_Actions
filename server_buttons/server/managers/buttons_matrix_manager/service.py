@@ -14,6 +14,7 @@ class ButtonsMatrixManager:
 
     gpio_interface: GpioButtonMatrixInterface
     therad_messages = {}
+    buttons_polling_period_in_ms: int
 
     def __init__(self, app: Flask = None) -> None:
         if app is not None:
@@ -30,6 +31,7 @@ class ButtonsMatrixManager:
                 col_1_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_C1"],
                 col_2_pin=app.config["PERIPHERALS_BUTTONS_MATRIX_C2"],
             )
+            self.buttons_polling_period_in_ms = app.config["BUTTONS_STATUS_POLL_PERIOD_IN_MS"]
 
             # Set polling task
             self.schedule_buttons_status_polling()
@@ -38,7 +40,7 @@ class ButtonsMatrixManager:
         """Schedule the buttons status polling"""
 
         # Buttons status polling job
-        @buttons_status_timeloop.job(interval=timedelta(milliseconds=50))
+        @buttons_status_timeloop.job(interval=timedelta(milliseconds=self.buttons_polling_period_in_ms))
         def check_buttons_pressed():
             #logger.info(f"Launch buttons status polling")
             pressed = self.gpio_interface.check_button_pressed()
