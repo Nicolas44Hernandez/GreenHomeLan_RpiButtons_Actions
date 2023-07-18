@@ -69,7 +69,7 @@ class ThreadManager:
                 logger.error(f"Error in thread node setup")
 
             # send thread message to notify conncetion
-            self.send_thread_message_to_border_router("ka_cam")
+            self.send_thread_message_to_border_router("ka_mat")
             # Schedule periodic keep alive
             # self.schedule_thread_keep_alive_message_send()
 

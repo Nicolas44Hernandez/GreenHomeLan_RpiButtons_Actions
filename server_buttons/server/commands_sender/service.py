@@ -26,10 +26,10 @@ class CommandSender:
         """Notify alarm to orchestrator"""
 
         logger.info(f"Sending command to orchestrator:{command}")
-        if wifi_connection_manager_service.connected:
-            return self.send_command_via_mqtt(command=command)
-        else:
-            return self.send_command_via_thread(command=command)
+        # if wifi_connection_manager_service.connected:
+        #     return self.send_command_via_mqtt(command=command)
+        # else:
+        return self.send_command_via_thread(command=command)
 
     def send_command_via_mqtt(self, command: str) -> bool:
         """Send command via MQTT message"""
