@@ -71,7 +71,7 @@ Log files defined in configuration file located in *server_box/server/config/log
 
 ```bash
 mkdir logs
-touch logs/app.log logs/thread.log logs/mqtt.log logs/buttons.log logs/wifi_connection.log
+touch logs/app.log logs/thread.log logs/mqtt.log logs/buttons.log logs/battery.log logs/wifi_connection.log
 ```
 
 # Hardware connection

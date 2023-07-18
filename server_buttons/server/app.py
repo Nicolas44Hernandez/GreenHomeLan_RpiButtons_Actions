@@ -8,6 +8,7 @@ from flask import Flask
 from .managers.thread_manager import thread_manager_service
 from .managers.mqtt_manager import mqtt_manager_service
 from .managers.buttons_matrix_manager import buttons_matrix_manager_service
+from .managers.battery_manager import battery_manager_service
 from .managers.wifi_connection_manager import wifi_connection_manager_service
 from .commands_sender import commands_sender_service
 
@@ -52,6 +53,8 @@ def register_extensions(app: Flask):
     thread_manager_service.init_app(app=app)
     # Button manager extension
     buttons_matrix_manager_service.init_app(app=app)
+    # Battery manager extension
+    battery_manager_service.init_app(app=app)
     # Wifi connection manager extention
     wifi_connection_manager_service.init_app(app=app)
     # Notification extension

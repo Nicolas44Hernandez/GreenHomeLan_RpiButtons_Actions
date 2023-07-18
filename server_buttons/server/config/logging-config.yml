@@ -38,6 +38,13 @@ handlers:
     maxBytes: 52428800 # 50 Megabytes
     backupCount: 1
 
+  battery:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/battery.log
+    maxBytes: 52428800 # 50 Megabytes
+    backupCount: 1
+
   wifi_connection:
     class: logging.handlers.RotatingFileHandler
     formatter: default
@@ -70,6 +77,11 @@ loggers:
     handlers: [console]
     propagate: no
 
+  server.managers.battery_manager:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
   server.managers.wifi_connection_manager:
     level: INFO
     handlers: [console]
@@ -86,6 +98,11 @@ loggers:
     propagate: no
 
   server.interfaces.gpio_interface:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
+  server.interfaces.battery_interface:
     level: INFO
     handlers: [console]
     propagate: no
