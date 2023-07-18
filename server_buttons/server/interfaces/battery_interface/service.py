@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class BatteryInterface:
     """Service class for Pijuice Battery management"""
 
-    pijuice_battery: Pijuice
+    pijuice_battery: PiJuice
 
     def __init__(self):
 

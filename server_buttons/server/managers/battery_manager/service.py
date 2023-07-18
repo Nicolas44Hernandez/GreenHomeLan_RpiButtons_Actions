@@ -1,4 +1,5 @@
 import logging
+import time
 from datetime import timedelta
 from timeloop import Timeloop
 from flask import Flask
@@ -42,23 +43,24 @@ class BatteryManager:
         def check_battery_level():
             logger.info(f"Launch battery status polling")
             bat_level = self.batery_interface.get_battery_level()
+            self.send_battery_level(bat_level)
+            time.sleep(2)
             if bat_level <= self.low_battery_threshold_in_percentage:
-                self.send_low_battery_alarm(battery_level=bat_level)
-            else:
-                self.send_battery_level(bat_level)
+                self.send_low_battery_alarm()
 
         battery_status_timeloop.start(block=False)
 
 
     def send_battery_level(self, battery_level: int):
+        logger.info(f"Sending battery level")
         """Send battery level"""
         msg = f"bt_{self.device_id}_{battery_level}"
         commands_sender_service.send_command_to_orchestrator(command=msg)
 
-    def send_low_battery_alarm(self, battery_level: int):
+    def send_low_battery_alarm(self):
+        logger.info(f"Sending battery level alarm")
         """send low battery alarm"""
-        # TODO: send correct alarm
-        msg = f"bt_{self.device_id}_{battery_level}"
+        msg = f"al_bt{self.device_id}_bat"
         commands_sender_service.send_command_to_orchestrator(command=msg)
 
 battery_manager_service: BatteryManager = BatteryManager()
