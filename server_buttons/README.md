@@ -50,6 +50,11 @@ add line
 export PATH="$PATH:/home/pi/.local/bin"
 ```
 
+Install pijuice
+```bash
+sudo apt-get install pijuice-base
+```
+
 ## Add the WiGreen Wi-Fi network configuration
 
 Edit the file `wpa_supplicant.conf`
@@ -76,8 +81,7 @@ touch logs/app.log logs/thread.log logs/mqtt.log logs/buttons.log logs/battery.l
 
 # Hardware connection
 Connect the buttons matrix to the RPI
-TODO: Make image
-![RPI buttons matrix connection](../images/rpi-buttons-matrix.png)
+![RPI buttons matrix connection](../images/rpi-buttons-actions.png)
 
 # Set rpi-buttons-matrix as a service
 
@@ -97,6 +101,3 @@ sudo systemctl daemon-reload
 sudo systemctl enable rpi-buttons-matrix
 sudo systemctl restart rpi-buttons-matrix
 ```
-
-#TODO
-[ ] update readme

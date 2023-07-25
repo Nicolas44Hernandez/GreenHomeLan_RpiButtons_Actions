@@ -1,14 +1,7 @@
 # GreenHomeLan_RpiButtons_Actions
 Buttons matrix to command orchestrator via Wifi over MQTT or via Thread to the orchestrator
 
-# RPI-Buttons_Actions
-
-# Use case : Buttons Matrix to control orchestrator
-
-This use case aims to show how to control the ochestrator via an object (Thread / Wifi)
-
 ## **Topology**
-TODO: update image
 ![Topology](images/general_topology.png)
 
 ## [**rpi_box**](https://github.com/Nicolas44Hernandez/GreenHomeLan_RpiBox)
