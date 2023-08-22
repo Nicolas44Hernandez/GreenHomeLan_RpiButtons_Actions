@@ -6,7 +6,7 @@ After=network.target syslog.target auditd.service systemd-journald.socket basic.
 User=pi
 WorkingDirectory=/home/pi/workspace/GreenHomeLan_RpiButtons_Actions
 Environment=FLASK_CONFIG=production
-Environment=FLASK_APP="server_button/server/app:create_app()"
+Environment=FLASK_APP="server_buttons/server/app:create_app()"
 ExecStart=/home/pi/.local/bin/flask run --host '0.0.0.0'
 Restart=always
 
