@@ -24,13 +24,6 @@ handlers:
     maxBytes: 52428800 # 50 Megabytes
     backupCount: 1
 
-  mqtt:
-    class: logging.handlers.RotatingFileHandler
-    formatter: default
-    filename: logs/mqtt.log
-    maxBytes: 52428800 # 50 Megabytes
-    backupCount: 1
-
   buttons:
     class: logging.handlers.RotatingFileHandler
     formatter: default
@@ -45,24 +38,12 @@ handlers:
     maxBytes: 52428800 # 50 Megabytes
     backupCount: 1
 
-  wifi_connection:
-    class: logging.handlers.RotatingFileHandler
-    formatter: default
-    filename: logs/wifi_connection.log
-    maxBytes: 52428800 # 50 Megabytes
-    backupCount: 1
-
 root:
   level: WARN
   handlers: [console]
 
 loggers:
   server.app:
-    level: INFO
-    handlers: [console]
-    propagate: no
-
-  server.managers.mqtt_manager:
     level: INFO
     handlers: [console]
     propagate: no
@@ -78,16 +59,6 @@ loggers:
     propagate: no
 
   server.managers.battery_manager:
-    level: INFO
-    handlers: [console]
-    propagate: no
-
-  server.managers.wifi_connection_manager:
-    level: INFO
-    handlers: [console]
-    propagate: no
-
-  server.interfaces.mqtt_interface:
     level: INFO
     handlers: [console]
     propagate: no
