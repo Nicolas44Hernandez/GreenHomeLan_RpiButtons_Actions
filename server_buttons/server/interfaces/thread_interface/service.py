@@ -109,5 +109,5 @@ class ThreadNode:
         message = "udp send " + message
         sent, response = self.send_serial_command(message)
         if not sent:
-            self.running = False
+            logger.error("Error sending message")
         return sent, response
