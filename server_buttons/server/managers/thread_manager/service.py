@@ -1,5 +1,6 @@
 import logging
 from timeloop import Timeloop
+from datetime import timedelta
 from flask import Flask
 from server.interfaces.thread_interface import ThreadInterface
 
@@ -32,6 +33,7 @@ class ThreadManager:
             self.thread_udp_port = app.config["THREAD_UDP_PORT"]
             self.ipv6_mesh = app.config["THREAD_IPV6_MESH"]
             self.dataset_key = app.config["THREAD_DATSET_KEY"]
+            self.device_id = app.config["PIJUICE_DEVICE_ID"]
 
             # Create Thread interface
             self.thread_interface = ThreadInterface(
@@ -48,7 +50,10 @@ class ThreadManager:
                 return
 
             # send thread message to notify conncetion
-            self.send_thread_message_to_border_router("ka_mat")
+            self.send_keep_alive_message()
+
+            # Schedule keep alive messages
+            self.schedule_thread_keep_alive_message_send()
 
     def send_thread_message_to_border_router(self, message: str):
         """Send message to border router"""
@@ -61,15 +66,21 @@ class ThreadManager:
             )
             logger.error("Message not published")
 
-    # def schedule_thread_keep_alive_message_send(self):
-    #     """Schedule KA thread message"""
+    def send_keep_alive_message(self):
+        """Send keep alive message via thread"""
+        message = f"ka_{self.device_id}"
+        logger.info("sending Thread keep alive msg")
+        self.send_thread_message_to_border_router(message)
 
-    #     @thread_keep_alive_timeloop.job(interval=timedelta(seconds=20))
-    #     def send_keep_alive():
-    #         logger.info("sending Thread keep alive msg")
-    #         self.send_thread_message_to_border_router("ka_cam")
 
-    #     thread_keep_alive_timeloop.start(block=False)
+    def schedule_thread_keep_alive_message_send(self):
+        """Schedule KA thread message"""
+
+        @thread_keep_alive_timeloop.job(interval=timedelta(seconds=20))
+        def send_keep_alive():
+            self.send_keep_alive_message()
+
+        thread_keep_alive_timeloop.start(block=False)
 
 
 thread_manager_service: ThreadManager = ThreadManager()
