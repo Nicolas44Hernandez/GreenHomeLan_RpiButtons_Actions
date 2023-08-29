@@ -14,7 +14,6 @@ class ThreadManager:
     thread_interface: ThreadInterface
     serial_interface: str
     serial_speed: int
-    thread_network_config: dict
     thread_udp_port: int
     ipv6_mesh: str
     dataset_key: str
@@ -45,7 +44,6 @@ class ThreadManager:
                 ipv6_mesh=self.ipv6_mesh,
                 dataset_key=self.dataset_key,
             ):
-                self.thread_network_config = None
                 logger.error(f"Error in thread node setup")
                 return
 

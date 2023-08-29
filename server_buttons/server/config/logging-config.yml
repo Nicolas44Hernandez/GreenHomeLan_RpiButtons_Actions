@@ -45,35 +45,35 @@ root:
 loggers:
   server.app:
     level: INFO
-    handlers: [console]
+    handlers: [app]
     propagate: no
 
   server.managers.thread_manager:
     level: INFO
-    handlers: [console]
+    handlers: [thread]
     propagate: no
 
   server.managers.buttons_matrix_manager:
     level: INFO
-    handlers: [console]
+    handlers: [buttons]
     propagate: no
 
   server.managers.battery_manager:
     level: INFO
-    handlers: [console]
+    handlers: [battery]
     propagate: no
 
   server.interfaces.thread_interface:
     level: INFO
-    handlers: [console]
+    handlers: [thread]
     propagate: no
 
   server.interfaces.gpio_interface:
     level: INFO
-    handlers: [console]
+    handlers: [buttons]
     propagate: no
 
   server.interfaces.battery_interface:
     level: INFO
-    handlers: [console]
+    handlers: [battery]
     propagate: no

@@ -34,7 +34,7 @@ class ThreadNode:
 
         self.thread_udp_port = thread_udp_port
         self.running = False
-        self.dataset_key = {}
+        self.dataset_key = None
 
     def setup_thread_node(self, ipv6_mesh: str, dataset_key: str) -> bool:
         """Thread node configuration and setup"""
@@ -60,6 +60,11 @@ class ThreadNode:
             self.send_serial_command(f"state")
             self.send_serial_command(f"netdata show")
             self.send_serial_command(f"ipaddr")
+
+            # Ping Thread border router
+            logger.info("Ping thread border router")
+            self.send_serial_command(f"ping {self.ipv6_mesh}")
+            # TODO: check ping for validate connection
 
             # Open UDP connection
             logger.info("Ope udp port")
